@@ -1,0 +1,1 @@
+const loginModule = angular.module('loginModule', []);

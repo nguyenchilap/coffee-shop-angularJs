@@ -1,0 +1,51 @@
+<div class="modal-header">
+
+    <div class="modal-header__title">
+        {{modalData.modalTitle}}
+    </div>
+
+    <div class="modal-header__close btn btn-close" ng-click="$ctrl.handleDismiss()">
+    </div>
+
+</div>
+
+<form id="edit-form" class="modal-body">
+
+
+    <div class="form-group mb-3" ng-repeat="inputForm in modalData.modalInput">
+
+        <!-- input type passive -->
+        <input ng-if="inputForm.inputDisplay === 'none'" type="text" name="{{inputForm.inputName}}" value="{{inputForm.inputValue}}" style="display: none;">
+
+        <!-- input type text, number, date -->
+        <div ng-if="inputForm.inputType != 'image' && inputForm.inputType != 'float' && inputForm.inputDisplay != 'none'">
+            <label for="{{inputForm.inputId}}" class="form-label">{{inputForm.inputLabel}}</label>
+            <input type="{{inputForm.inputType}}" name="{{inputForm.inputName}}" class="form-control dialog-input" id="{{inputForm.inputId}}" value="{{inputForm.inputValue}}">
+        </div>
+
+        <!-- input float -->
+        <div ng-if="inputForm.inputType == 'float'">
+            <label for="{{inputForm.inputId}}" class="form-label">{{inputForm.inputLabel}}</label>
+            <input type="number" step=0.05 name="{{inputForm.inputName}}" class="form-control dialog-input" id="{{inputForm.inputId}}" value="{{inputForm.inputValue}}">
+        </div>
+
+        <!-- input image type -->
+        <div ng-if="inputForm.inputType == 'image'" class="d-flex align-items-center">
+            <div class="input-image-display mb-3 me-3" style="background-image: url('{{inputForm.inputValue}}')"></div>
+            
+            <input onchange="angular.element(this).scope().fileChanged(this)" type="file" class="ms-3" accept="image/png, image/gif, image/jpeg"/>
+
+            <input type="text" name="{{inputForm.inputName}}" ng-model="imageSrc" style="display: none;">
+        </div>
+
+
+
+    </div>
+
+
+</form>
+
+<div class="modal-footer">
+    <button class="btn btn-secondary" ng-click="$ctrl.handleDismiss()">Cancel</button>
+    <button class="btn btn-success" ng-click="editSubmitted()">Submit</button>
+</div>

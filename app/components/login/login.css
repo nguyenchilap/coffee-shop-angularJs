@@ -1,0 +1,17 @@
+form[name="loginForm"] {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.login-wrapper {
+    width: 40%;
+}
+
+.noti-warning {
+    font-style: italic;
+    color: rgb(155, 0, 0);
+    font-weight: 450;
+    margin: 8px 0;
+}

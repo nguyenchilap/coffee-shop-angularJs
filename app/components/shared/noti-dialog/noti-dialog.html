@@ -1,0 +1,25 @@
+<div class="modal-header">
+
+    <div class="modal-header__title">
+        {{modalData.modalTitle}}
+    </div>
+
+    <div class="modal-header__close btn btn-close" ng-click="$ctrl.handleDismiss()">
+    </div>
+
+</div>
+
+<div class="modal-body">
+
+    <div class="container">
+        <div class="notification-text">
+            {{modalData.modalContent}}
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-secondary" ng-click="$ctrl.handleDismiss()">Cancel</button>
+    <button class="btn btn-success" ng-click="createSubmitted()">Submit</button>
+</div>

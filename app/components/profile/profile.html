@@ -1,0 +1,60 @@
+<header-component></header-component>
+
+<navbar></navbar>
+
+<div class="container d-flex justify-content-center align-items-center" id="profile">
+
+    <div class="row" style="margin: auto; flex: 1;">
+
+        <div class="col-4 d-flex align-items-center flex-column">
+            <div class="image-display mb-3" ng-style="{ 'background-image': 'url(' + imageSrc + ')'}">
+                <div class="image-icon-btn" ng-click="onImageIconBtnClick()"> <i class="fa-solid fa-camera"></i> </div>
+            </div>
+            <input style="display: none;" id="btn-choose-image" name="employeeImage" onchange="angular.element(this).scope().fileChanged(this)" type="file" accept="image/png, image/gif, image/jpeg" required/>
+        </div>
+
+        <form id="profileForm" class="col-6 ms-5">
+
+            <div class="mb-3">
+                <div>
+                    <label class="form-label">Login name : </label>
+                    <span style="font-weight: 600;">{{currentUser.employeeLoginName}}</span>
+                </div>
+                <div>
+                    <label class="form-label">Role :</label>
+                    <span ng-if="currentUser.employeeRole == '1'" style="font-weight: 600;">Admin</span>
+                    <span ng-if="currentUser.employeeRole == '2'" style="font-weight: 600;">Staff</span>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">Fullname</label>
+                <input ng-model="currentUser.employeeName" type="text" class="form-control" name="employeeName" id="name" rows="3" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender" name="employeeGender" class="form-select employee-gender-select mb-3" onchange="angular.element(this).scope().onGenderSelected(this)" required>
+                    <option value="1" ng-selected="currentUser.employeeGender == 1">Male</option>
+                    <option value="2" ng-selected="currentUser.employeeGender == 2">Female</option>
+                    <option value="0" ng-selected="currentUser.employeeGender == 0">Others</option>
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input ng-model = "currentUser.employeeEmail" type="email" class="form-control" name="employeeEmail" id="email" rows="3" required>
+            </div>
+    
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input ng-model="currentUser.employeePhone" type="text" class="form-control" name="employeePhone" id="phone" rows="3" required>
+            </div>
+    
+            <button type="submit" class="btn btn-success float-end mt-4" ng-click="editProfileSubmitted()">Edit profile</button>
+
+        </form>
+
+    </div>
+
+</div>

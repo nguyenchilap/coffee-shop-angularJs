@@ -1,0 +1,21 @@
+<div id="header-wrapper">
+    <a class="header__branch" href="/#!/store">THE COFFEE HOUSE</a>
+
+    <div class="header__user-nav" ng-if="currentUser">
+
+        <div class="user-button d-flex align-items-center" ng-click="onUserButtonClick($event)">
+            <div class="user-image" style="background-image: url('{{currentUser.employeeImage}}');"></div>
+    
+            <div class="user-name ms-2"> {{currentUser.employeeName}} </div>
+        </div>
+        
+        <div class="user-actions" ng-class="{'active': userAction}">
+
+            <a class="action-item" href="/#!/profile"> Profile </a>
+    
+            <a class="action-item" ng-click="onLogOut()"> Sign out </a>
+    
+        </div>
+    </div>
+
+</div>

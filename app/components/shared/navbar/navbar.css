@@ -1,0 +1,49 @@
+navbar.ng-isolate-scope {
+    position: fixed;
+    display: flex;
+    top: 72px;
+    min-width: 80px;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(143, 143, 143);
+}
+
+.side-nav {
+    width: 100%;
+    align-items: center;
+}
+
+.side-nav__item {
+    width: 90%;
+    border-radius: 8px;
+    margin: 8px 0;
+}
+
+.side-nav__item a {
+    color: black;
+    display: block;
+    width: 100%;
+    font-size: 26px;
+    padding: 16px;
+    text-align: center;
+}
+
+.side-nav__item:hover {
+    background-color: rgb(54, 54, 54);
+}
+
+.side-nav__item:hover a {
+    color: rgb(218, 218, 218);
+}
+
+.side-nav__item.active {
+    background-color: rgb(54, 54, 54);
+}
+
+.side-nav__item.active a {
+    color: white;
+}
+
+.side-nav__item.hidden {
+    display: none;
+}

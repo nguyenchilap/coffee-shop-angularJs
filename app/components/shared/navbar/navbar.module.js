@@ -1,0 +1,1 @@
+const navBarModule = angular.module('navBarModule', []);

@@ -1,0 +1,58 @@
+<div class="modal-header">
+
+    <div class="modal-header__title">
+        {{modalData.modalTitle}}
+    </div>
+
+    <div class="modal-header__close btn btn-close" ng-click="$ctrl.handleDismiss()">
+    </div>
+
+</div>
+
+<form id="create-form" class="modal-body">
+
+
+    <div class="form-group mb-3" ng-repeat="inputForm in modalData.modalInput">
+
+        <!-- input number, text, date,.. -->
+        <div ng-if="inputForm.inputType != 'image' && inputForm.inputType != 'select' && inputForm.inputType != 'float'">
+            <label class="form-label">{{inputForm.inputLabel}}</label>
+            <input type="{{inputForm.inputType}}" name="{{inputForm.inputName}}" class="form-control dialog-input" />
+
+            <div class="noti-warning" id="{{inputForm.inputId}}" style="display: none;">Field required !!</div>
+        </div>
+
+        <!-- input float -->
+        <div ng-if="inputForm.inputType == 'float'">
+            <label class="form-label">{{inputForm.inputLabel}}</label>
+            <input type="number" name="{{inputForm.inputName}}" class="form-control dialog-input" step=0.05 />
+
+            <div class="noti-warning" id="{{inputForm.inputId}}" style="display: none;">Field required !!</div>
+        </div>
+
+        <!-- input image -->
+        <div ng-if="inputForm.inputType == 'image'" class="d-flex align-items-center">
+            <div class="input-image-display mb-3 me-3" ng-style="{ 'background-image': 'url(' + imageSrc + ')'}"></div>
+
+            <input onchange="angular.element(this).scope().fileChanged(this)" type="file" class="ms-3" accept="image/png, image/gif, image/jpeg"/>
+
+            <input type="text" name="{{inputForm.inputName}}" ng-model="imageSrc" style="display: none;" id=""/>
+        </div>
+
+        <!-- input select -->
+        <div ng-if="inputForm.inputType == 'select'">
+            <label class="form-label" >{{inputForm.inputLabel}}</label>
+            <select name="{{inputForm.inputName}}" class="form-select" required>
+                <option value="{{option.value}}" ng-repeat="option in inputForm.inputSelectOptions">{{option.text}}</option>
+            </select>
+        </div>
+
+    </div>
+
+
+</form>
+
+<div class="modal-footer">
+    <button class="btn btn-secondary" ng-click="$ctrl.handleDismiss()">Cancel</button>
+    <button class="btn btn-success" ng-click="createSubmitted()">Submit</button>
+</div>

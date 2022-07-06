@@ -1,0 +1,57 @@
+.list-header__actions select {
+    padding: 0 12px;
+    border-radius: 4px;
+}
+
+
+table .item-image {
+    margin: auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 70px;
+    height: 70px;
+}
+
+table .item-number-length {
+    text-align: center;
+}
+
+table>tbody {
+    vertical-align: middle !important;
+}
+
+select {
+    cursor: pointer;
+}
+
+form#edit-form,
+form#create-form {
+    min-width: 428px;
+}
+
+.long-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    max-width: 400px;
+}
+
+.btn-sort-asc {
+    margin-top: -3px;
+    margin-bottom: -18px;
+    cursor: pointer;
+}
+
+.btn-sort-desc {
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+.btn-sort-asc.disabled,
+.btn-sort-desc.disabled {
+    display: none;
+}

@@ -1,0 +1,78 @@
+#header-wrapper {
+    background-color: rgb(252, 182, 52);
+    color: black;
+    padding: 16px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 72px;
+    max-height: 80px;
+    z-index: 1000;
+}
+
+.header__branch {
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    color: black;
+}
+
+a.header__branch:hover {
+    color: unset;
+}
+
+.header__user-nav .user-image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.header__user-nav .user-name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.header__user-nav {
+    position: relative;
+}
+
+.user-button {
+    cursor: pointer;
+}
+
+.user-actions {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    background-color: rgb(254 254 254);
+    right: 0;
+    border-radius: 8px;
+    min-width: 120px;
+    padding: 8px;
+    box-shadow: 1px 2px 5px rgb(0 0 0 / 30%); 
+}
+
+.user-actions.active {
+    display: flex;
+}
+
+.action-item {
+    padding: 6px 0;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 8px;
+    color: rgb(29, 29, 29);
+}
+
+.action-item:hover {
+    background-color: rgb(226, 226, 226);
+}

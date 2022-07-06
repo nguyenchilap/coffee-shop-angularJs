@@ -1,0 +1,11 @@
+<div class="side-nav d-flex flex-column" ng-init="selectedNav = 'store'">
+
+    <div class="side-nav__item"
+        ng-repeat="navItem in navItems" 
+        ng-class="{'active': isActive('{{navItem.isActive}}'), 'hidden': isNotPermitted({{navItem.lowPriority}})}" >
+
+        <a href="{{navItem.href}}"><i class="fa-solid {{navItem.navIcon}}"></i></a>
+    </div>
+
+    
+</div>

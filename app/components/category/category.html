@@ -1,0 +1,153 @@
+
+<header-component></header-component>
+
+<navbar></navbar>
+
+<div id="body-wrapper">
+    
+    <div class="container list-item-wrapper mt-5">
+        <div class="list-item-header"></div>
+        <div class="list-item-body">
+            <div>
+                
+                <table-component 
+                    entity="$ctrl.entity" 
+                    table="$ctrl.tableEntity"
+                    actions="$ctrl.actions">
+                </table-component>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER  -->
+    <div id="create-order" class="create-order-wrapper container mt-5">
+
+        <div class="row">
+
+            <form name="orderForm" class="create-order col-6">
+        
+                <div class="order-content">
+                    <div class="order-header mb-5 d-flex justify-content-between">
+                    <h5 class="order-title">Create Order</h5>
+                    <button class="btn btn-danger btn-reset-order" ng-click="onResetOrder()">Reset Order</button>
+                </div>
+    
+                <div class="order-body mt-3">
+        
+                    <div class="mb-3">
+                        <label for="orderAddress" class="form-label">Address</label>
+                        <input ng-model="order.orderAddress" name="orderAddress" type="text" class="form-control" required>
+                        <div class="noti-warning" ng-show="orderForm.orderAddress.$error.required && orderForm.orderAddress.$touched">
+                            Address required !!
+                        </div>
+                    </div>
+        
+                    <div class="mb-3">
+                        <label for="orderDate" class="form-label">Date</label>
+                        <input ng-model="order.orderDate" name="orderDate" type="date" class="form-control" required>
+                        <div class="noti-warning" ng-show="orderForm.orderDate.$error.required && orderForm.orderDate.$touched">
+                            Date required !!
+                        </div>
+                    </div>
+        
+                    <div class="mb-3">
+                        <label for="orderNote" class="form-label">Note</label>
+                        <textarea ng-model="order.orderNote" class="form-control"> 
+                        </textarea>
+                    </div>
+        
+                    <div class="mt-5 d-flex justify-content-between align-items-center">
+        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label for="orderTotal" style="font-size: 20px;"> Total (VND): </label>
+                            <input ng-model = "order.orderTotal" class="ms-4 order-total disabled" pattern="[0-9]+([\.,][0-9]+)*" format disabled> 
+                        </div>
+        
+                        <div class="order-voucher-wrapper d-flex" ng-if="voucher">
+                            <button class="btn btn-success btn-re-get-voucher me-3" ng-click="onGetVoucher(order)">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                            <div class="order-voucher">
+                                <div class="voucher-id me-4">{{voucher.voucherId}}.</div>
+                                <div class="voucher-code me-4">{{voucher.voucherCode}}</div>
+                                <div class="voucher-percentage">{{voucher.voucherPercentage * 100}} %</div>
+                            </div>
+                        </div>
+                    
+                        <div ng-if="!voucher">
+                            <button class="btn btn-outline-dark" 
+                                ng-click="onGetVoucher()"
+                                ng-disabled="orderForm.orderDate.$error.required">
+                                Add voucher
+                            </button>
+                        </div>
+        
+                    </div>
+        
+                    <div class="mt-5 mb-5 d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label for="orderFinalTotal" style="font-size: 20px;"> Final total (VND): </label>
+                            <input ng-model = "order.orderFinalTotal" class="ms-4 order-final-total disabled" pattern="[0-9]+([\.,][0-9]+)*" format disabled>
+                        </div>
+                        <button class="btn btn-success" 
+                            ng-click="onCreateOrder()" 
+                            ng-disabled="orderForm.$invalid">
+                            Create order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        
+            </form>
+        
+            <!-- ORDER PRODUCTS -->
+            <div class="order-beverages col-6">
+                
+                <div class="row">
+                    <div class="col-5 size-label">
+                        <div style="margin-left: 3px">S</div>
+                        <div>M</div>
+                        <div style="margin-right: 4px">L</div>
+                    </div>
+                </div>
+
+                <div class="beverage-item d-flex align-items-center mb-4 row" ng-repeat="category in categories">
+                    
+                    <div class="col-5 d-flex" style="margin-top: 20px;">
+                        <div class="ms-3 d-flex flex-column align-items-center">
+                            <input ng-change="onChangeQuantity()" ng-model = "orderCategories[$index].orderBeverages[0].quantity" name="quantity" type="number" min="0"/>
+                            <label>{{orderCategories[$index].orderBeverages[0].beverage.beveragePrice | currency:"đ":1}}</label>
+                        </div>
+                        <div class="ms-3 d-flex flex-column align-items-center">
+                            <input ng-change="onChangeQuantity()" ng-model = "orderCategories[$index].orderBeverages[1].quantity" name="quantity" type="number" min="0"/>
+                            <label>{{orderCategories[$index].orderBeverages[1].beverage.beveragePrice | currency:"đ":1}}</label>
+                        </div>
+                        <div class="ms-3 d-flex flex-column align-items-center">
+                            <input ng-change="onChangeQuantity()" ng-model = "orderCategories[$index].orderBeverages[2].quantity" name="quantity" type="number" min="0"/>
+                            <label>{{orderCategories[$index].orderBeverages[2].beverage.beveragePrice | currency:"đ":1}}</label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-7">
+                        <div class="beverage-body ms-4">
+                            <div class="beverage-item-image" style="background-image: url('{{category.categoryImage}}') ;"> </div>
+                            
+                            <div class="beverage-item-name ms-5 me-5"> {{category.categoryId}} . {{category.categoryName}}</div>
+                        
+                            <!-- <div class="beverage-item-price">{{orderBeverage.beverage.beveragePrice}}</div> -->
+                        
+                            <button type="button" class="btn-close btn-delete-beverage me-3" ng-click="onRemoveBeverageFromOrder(category)"></button>
+                        </div>
+                    </div>
+
+                </div>
+        
+            </div>
+        
+        </div>
+    
+    </div>
+
+
+</div>

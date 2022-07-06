@@ -1,0 +1,113 @@
+
+<header-component></header-component>
+
+<navbar></navbar>
+
+<div id="body-wrapper">
+
+    <!-- ORDER LIST -->
+    <div class="container list-item-wrapper mt-5">
+        <div class="list-item-header"></div>
+        <div class="list-item-body">
+            <div>
+                
+                <table-component 
+                        entity="$ctrl.entity" 
+                        table="$ctrl.tableEntity"
+                        actions="$ctrl.actions">
+                </table-component>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDER DETAILS -->
+    <div id="order-details" class="container row d-flex justify-content-between mt-5 mb-5" ng-class="{'active' : order}">
+      <div class="col-4 order-information" ng-if="order">
+        <div class="order-title"> Order Details </div>
+        <div class="order">
+          <div class="order-id order-field">
+            <div class="me-3">Order ID :</div> 
+            <div>{{order.orderId}} </div>
+          </div>
+          <div class="order-date order-field">
+            <div class="me-3">Date :</div> 
+            <div>{{order.orderDate}}</div>
+          </div>
+          <div class="order-address order-field">
+            <div class="me-3">Address :</div> 
+            <div>{{order.orderAddress}}</div>
+          </div>
+          <div class="order-note order-field">
+            <div class="me-3">Note :</div> 
+            <div>{{order.orderNote}}</div>
+          </div>
+        </div>
+        
+        <div class="voucher">
+          <div class="voucher-title mt-4 mb-3"> Voucher </div>
+          <div ng-if="order.voucher" class="voucher-code voucher-field"> 
+            <div class="me-4">Voucher Code :</div> 
+            <div> {{order.voucher.voucherCode}} </div> 
+          </div>
+          <div ng-if="order.voucher" class="voucher-percentage voucher-field"> 
+            <div class="me-4">Voucher Value :</div> 
+            <div> {{order.voucher.voucherPercentage * 100}} %  </div> 
+          </div>
+        </div>
+    
+      </div>
+    
+      <div class="col-7 beverage-list" ng-if="order">
+        <div class="beverage-list__title"> Beverages </div>
+    
+        <table class="beverage-list__table table-container table table-striped table-hover">
+          <thead>
+    
+            <tr>
+              <th scope="col"> ID </th>
+              <th scope="col"> Name </th>
+              <th scope="col"> <div class="table-center-column">Size</div> </th>
+              <th scope="col"><div class="table-center-column">Quantity</div></th>
+              <th scope="col"><div class="table-center-column">Price</div></th>
+            </tr>
+    
+          </thead>
+          <tbody>
+    
+            <tr ng-repeat="orderBeverage in order.orderBeverages">
+              <td><div class="table-id">{{orderBeverage.beverage.beverageId}}</div></td>
+              <td><div class="table-name">{{orderBeverage.beverage.category.categoryName}}</div></td>
+      
+              <td ng-if="orderBeverage.beverage.beverageSize == 1"><div class="table-center-column">Small</div></td>
+              <td ng-if="orderBeverage.beverage.beverageSize == 2"><div class="table-center-column">Medium</div></td>
+              <td ng-if="orderBeverage.beverage.beverageSize == 3"><div class="table-center-column">Large</div></td>
+      
+              <td><div class="table-center-column">{{orderBeverage.quantity}}</div></td>
+              <td><div class="table-center-column">{{orderBeverage.beverage.beveragePrice}}</div></td>
+            </tr>
+    
+            <tr>
+              <td scope="col"> <div style="font-weight: 600;">Total</div> </td>
+              <td scope="col"> </td>
+              <td scope="col"> </td>
+              <td scope="col"> </td>
+              <td scope="col"> <div class="table-center-column">{{order.orderTotal}}</div> </td>
+            </tr>
+    
+            <tr>
+              <td scope="col"> <div style="font-weight: 600;"> Final Total</div> </td>
+              <td scope="col"> </td>
+              <td scope="col"> </td>
+              <td scope="col"> </td>
+              <td scope="col"> <div class="table-center-column">{{order.orderFinalTotal}}</div> </td>
+            </tr>
+    
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,1 @@
+const profileModule = angular.module('profileModule', ['employeeModule']);

@@ -1,0 +1,1 @@
+const orderModule = angular.module('orderModule', []);

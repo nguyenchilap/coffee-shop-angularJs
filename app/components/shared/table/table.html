@@ -1,0 +1,162 @@
+
+<div class="row">
+    <div class="col-4">
+        <a class="btn btn btn-outline-dark" ng-click="openCreateDialog()" ng-class="{'disabled': isNotPermitted() && $ctrl.entity != 'order'}">
+            Create new {{$ctrl.entity}}
+        </a>
+    </div>
+</div>
+
+<div class="row list-wrapper mt-4">
+    <div class="col-12">
+        <div class="list-header">
+            <h2 class="mb-3">{{$ctrl.table.tableTitle}}</h2>
+
+            <div class="list-header__actions d-flex justify-content-between align-items-center">
+                <select onchange="angular.element(this).scope().onItemsPerPageSelected(this)">
+                    <option value="-1" selected>Select items per page</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                    <option value="{{listEntity.length}}">All</option>
+                </select>   
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <input type="checkbox" id="checkBoxAll" ng-model="checkAll" ng-click="onCheckBoxAll()" style="cursor: pointer;">
+                    <label for="checkBoxAll" class="ms-1">Select all</label>
+
+                    <div class="dropdown ms-4" ng-if="$ctrl.actions">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                          Actions
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li ng-repeat="action in $ctrl.actions">
+                              <div class="dropdown-item" ng-click="onHandleActions($event)" style="cursor: pointer;">{{action.actionName}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="col-4">
+                    <input type="text" ng-model="search" class="form-control" placeholder="Search by any keyword..">
+                </div>
+            </div>
+        </div>
+        
+        <table class="mt-4 table table-striped table-hover table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th ng-repeat="column in $ctrl.table.tableColumns">
+
+                    <div class="d-flex justify-content-between">
+                        <!-- text value -->
+                        <div ng-if="column.columnType == 'text'">{{column.columnTitle}}</div>
+    
+                        <!-- long-text value -->
+                        <div ng-if="column.columnType == 'long-text'" class="long-text">{{column.columnTitle}}</div>
+    
+                        <!-- center values-->
+                        <div ng-if="column.columnType != 'text' && column.columnType != 'long-text'"> 
+                            {{column.columnTitle}} 
+                        </div>
+                        
+                        <div class="btn-sort d-flex flex-column" 
+                            sortField="{{column.columnValue}}"
+                            ng-if="column.sortAble"
+                            ng-click="onSortBtnClicked($event)">
+
+                            <span class="btn-sort-asc">
+                                <i class="fa-solid fa-sort-up"></i>
+                            </span>
+                            <span class="btn-sort-desc">
+                                <i class="fa-solid fa-sort-down"></i>
+                            </span>
+                            
+                        </div>
+                    </div>
+                    
+                </th> 
+                <th scope="col" ng-if="!isNotPermitted() || $ctrl.entity == 'order'">
+                    <div style="text-align: center;">Actions</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr dir-paginate="entity in listEntity | filter:search | itemsPerPage: itemsPerPage">
+
+                <!-- checkboxes -->
+                <td>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <input style="cursor: pointer;" type="checkbox" ng-model="entity.checked" ng-change="onEntitySelected()">
+                    </div>
+                </td>
+
+                <td ng-repeat="column in $ctrl.table.tableColumns">
+
+                    <!-- text value -->
+                    <div ng-if="column.columnType == 'text'"> {{entity[column.columnValue]}} </div>
+                    
+                    <!-- long-text value -->
+                    <div ng-if="column.columnType == 'long-text'" class="long-text"> {{entity[column.columnValue]}} </div>
+
+                    <!-- number value -->
+                    <div ng-if="column.columnType == 'number'" class="item-number-length"> {{entity[column.columnValue] | number : fractionSize}} </div>
+
+                    <!-- image value -->
+                    <div ng-if="column.columnType == 'image'" class="item-image" style="background-image: url('{{entity[column.columnValue]}}');"></div>
+
+                    <!-- length value -->
+                    <div ng-if="column.columnType == 'length'" class="item-number-length"> {{entity[column.columnValue].length | number : fractionSize}} </div>
+
+                    <!-- percentage value -->
+                    <div ng-if="column.columnType == 'percentage'" class="item-number-length"> {{entity[column.columnValue] * 100}} % </div>
+
+                    <!-- money value -->
+                    <div ng-if="column.columnType == 'money'" class="item-number-length"> {{entity[column.columnValue] | currency:"đ":2 }}  </div>
+
+                    <!-- date value -->
+                    <div ng-if="column.columnType == 'date'" class="item-number-length"> {{entity[column.columnValue]}}  </div>
+                </td>
+
+                <!-- actions -->
+                <td ng-if="!isNotPermitted() || $ctrl.entity == 'order'">
+                    <div class="d-flex justify-content-around">
+
+                        <a class="btn btn-success" 
+                            ng-if="$ctrl.entity != 'order' && $ctrl.entity != 'employee'" 
+                            ng-click="openEditDialog(entity)"
+                            ng-class="{'hidden': isNotPermitted()}">
+                            
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+
+                        <a class="btn btn-warning" 
+                            ng-if="$ctrl.entity == 'order'" 
+                            ng-click="openOrderDetailModal(entity)">
+
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+                        
+                        <a class="btn btn-danger" 
+                            ng-click="deleteEntity(entity)"
+                            ng-class="{'hidden': isNotPermitted() && $ctrl.entity != 'order'}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        
+        <div class="d-flex justify-content-between">
+            <div style="font-style: italic; font-size: 18px">Showing {{itemsPerPage}} items</div>
+
+            <dir-pagination-controls
+                    max-size="4"
+                    direction-links="true"
+                    boundary-links="true" >
+            </dir-pagination-controls>
+        </div>
+    </div>
+</div>
